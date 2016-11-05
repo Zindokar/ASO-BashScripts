@@ -5,7 +5,7 @@ then
 	echo "Debe usarse con dos parametros: "
 	echo "Primero: -p o -i para mostrar lineas pares o impares."
 	echo "Segundo o mas: ficheros a leer."
-	exit 0
+	exit 1
 fi
 condicion=$1
 shift
@@ -29,9 +29,9 @@ then
 		done
 		shift
 	done
-	exit 1
+	exit 0
 else
 	echo "Primer parametro incorrecto."
 	echo "Primero: -p o -i para mostrar lineas pares o impares."
-	exit 0
+	exit 1
 fi
