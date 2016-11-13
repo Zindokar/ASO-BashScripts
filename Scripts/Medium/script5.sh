@@ -2,7 +2,7 @@
 #Autor: Alejandro Lopez Santos
 if [ $# -ne 1 ]
 then
-	R="."
+	R=$(pwd)
 else
 	R=$1
 fi
@@ -10,6 +10,9 @@ fi
 find $R -type f \( -name "*.doc" -o -name "*.docx" \) | while read origen
 do
 	destino=$( echo $origen | tr '[:upper:]' '[:lower:]' )
-	mv $origen $destino
-	echo "$( date --rfc-3339=seconds ) $origen ${destino##*/}" >> /var/log/cambiosDoc
+	if [ "$origen" != "$destino" ]
+	then
+		mv $origen $destino
+		echo "$( date --rfc-3339=seconds )\t$origen\t${destino##*/}" >> /var/log/cambiosDoc
+	fi
 done
