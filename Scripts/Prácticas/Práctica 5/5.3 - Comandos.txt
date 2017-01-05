@@ -1,0 +1,20 @@
+1.- Comandos usados para probar el sistema de quotas:
+-------------------------
+yum install quota
+quotacheck -cvug /var/media
+quotacheck -cvug /var/backup
+quotaon -v /var/backup
+useradd prueba
+passwd prueba
+edquota -u prueba
+repquota
+repquota -a
+edquota -t -u prueba
+edquota -g prueba
+quota -u prueba
+quota -all
+repquota /var/backup
+dd if=/dev/zero of=./arch_gordo bs=1 count=1 seek=5M
+chown prueba:prueba arch_gordo 
+quota prueba
+repquota /var/backup

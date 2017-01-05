@@ -1,0 +1,2 @@
+05 00 * * 1 [ $( date +\%d ) -le 7 ] && /root/backupTotal.sh || /root/backupIncremental1.sh
+15 00 * * */2 /root/backupIncremental2.sh

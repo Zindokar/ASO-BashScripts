@@ -1,0 +1,46 @@
+1.-
+------------
+fdisk -l
+fdisk /dev/sdb
+fdisk /dev/sdc
+mkfs.ext4 -N 3000 -b 2048 -v /dev/sdb1
+mkfs.ext4 -N 3000 -b 2048 -v /dev/sdc1
+fdisk -l
+pvcreate -v /dev/sdb1 /dev/sdc1
+pvdisplay
+
+2.-
+------------
+vgcreate -v VG_ASO /dev/sdb1 /dev/sdc1
+vgdisplay
+
+3.-
+------------
+lvcreate -v --size --name lv_media 100M VG_ASO
+lvdisplay
+
+4.-
+------------
+mkfs.ext4 -N 3000 -b 2048 -v /dev/VG_ASO/lv_media -L MEDIA
+mount -t ext4 /dev/VG_ASO/lv_media /mnt
+
+5.-
+------------
+lvextend -v -L +40M /dev/VG_ASO/lv_media
+lvdisplay
+e2fsck -f /dev/VG_ASO/lv_media
+resize2fs -v /dev/VG_ASO/lv_media
+
+6.-
+------------
+lvcreate -v --name lv_backup -L 200M VG_ASO
+mkfs.ext4 -v -L BACKUP -b 2048 -N 3000 -c -c /dev/VG_ASO/lv_backup
+
+7.-
+------------
+fsck -a /dev/VG_ASO/lv_backup
+
+8.- Añadimos usrquota y grpquota para más adelante
+------------
+/dev/VG_ASO/lv_media	/var/media		ext4	defaults,usrquota,grpquota	1 3
+/dev/VG_ASO/lv_backup	/var/backup		ext4	defaults,usrquota,grpquota	1 3

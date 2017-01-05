@@ -1,0 +1,22 @@
+1.-
+------------
+tune2fs -C 0 /dev/VG_ASO/lv_media
+tune2fs -c 1 /dev/VG_ASO/lv_media
+   
+2.-
+------------
+tune2fs -l /dev/VG_ASO/lv_media
+
+3.-
+------------
+tune2fs -c 5 /dev/VG_ASO/lv_media
+tune2fs -c 5 /dev/VG_ASO/lv_backup
+   
+4.-
+------------
+df -h
+
+5.-
+------------
+du -h -s /usr
+du -h -s /var
